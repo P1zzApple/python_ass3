@@ -1,26 +1,13 @@
 from flask import Flask, url_for, render_template
 from flask import request
-from flask_sqlalchemy import *
 import api
 import requests
 
-# Use Moralis ->https://moralis.io/
-# in order to get an information about NFT
+
 app = Flask(__name__)
-API_KEY = 'bLWa5EaQFs9umsZIshcBL1zoawIYShqQlMHXdiF7Y7HbxvV7wZvmJIxjibhA1Pcm'
-result = api.result
+result = [api.result]
 url1 = "https://solana-gateway.moralis.io/nft/mainnet/"
 url2 = "/metadata"
-#app.config['SQLALCHEMY_DATABASE_URI'] = ''
-#db = SQLAlchemy(app)
-#db.init_app(app)
-
-'''
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120), index=True, unique=True)
-    email = db.Column(db.String)
-'''
 
 
 @app.route("/")
@@ -39,8 +26,8 @@ def result():
         address = request.form['Type']
         url = url1 + address + url2
         response = requests.get(url, headers=headers)
-        result = response.text
 
+    result = response.text
     return render_template('result.html', title='NFT', menu=result)
 
 
